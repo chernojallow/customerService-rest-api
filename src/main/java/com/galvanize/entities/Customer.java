@@ -1,21 +1,51 @@
 package com.galvanize.entities;
 
+import javax.persistence.*;
+
+@Entity(name = "customers")
 public class Customer {
+
+    @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String name;
+     @Column(name= "first_name")
+    String first;
+     @Column (name = "Last_name")
+     String last;
+     @Column(length = 50)
     String address;
-    int phoneNumber;
+     @Column(length = 25)
+     String city;
+     @Column(length = 2)
+     String state;
+     @Column (length = 5)
+     String zipcode;
+     @Column(unique = true)
+    String phoneNumber;
+     @Column (name = "description")
     String description;
 
-    public Customer(){};
 
-    public Customer(int id, String name, String address, int phoneNumber, String description) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.description = description;
+    public Customer() {
     }
+
+
+
+    public Customer ( String first, String last, String address,
+                     String city, String state, String zipcode, String phoneNumber) {
+
+        this.id = id;
+        this.first = first;
+        this.last = last;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this. zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+
+    }
+
+
 
     public int getId() {
         return id;
@@ -25,12 +55,20 @@ public class Customer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirst() {
+        return first;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirst(String first) {
+        this.first = first;
+    }
+
+    public String getLast() {
+        return last;
+    }
+
+    public void setLast(String last) {
+        this.last = last;
     }
 
     public String getAddress() {
@@ -41,11 +79,35 @@ public class Customer {
         this.address = address;
     }
 
-    public int getPhoneNumber() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -60,10 +122,17 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", first='" + first + '\'' +
+                ", last='" + last + '\'' +
                 ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipcode=" + zipcode +
                 ", phoneNumber=" + phoneNumber +
                 ", description='" + description + '\'' +
                 '}';
     }
+
+
 }

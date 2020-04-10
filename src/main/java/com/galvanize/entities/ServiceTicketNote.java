@@ -1,37 +1,50 @@
 package com.galvanize.entities;
 
-import java.sql.Timestamp;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity(name = "ServiceTicketNote")
 public class ServiceTicketNote {
 
-    int id;
-    int serviceTicket_id;
+  @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long  id;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name ="ticket_id", nullable = false)
+    ServiceTicket serviceTicket;
+
+    @Column(columnDefinition = "LONGTEXT")
     String note;
-    Timestamp created_at;
+    @JsonFormat(pattern = "MM/dd/yyyy HH:mm")
+    LocalDateTime created_at;
+//    LocalDateTime createdAt = LocalDateTime.now();
+
 
     public  ServiceTicketNote(){};
 
-    public ServiceTicketNote(int id, int serviceTicket_id, String note, Timestamp created_at) {
+    public ServiceTicketNote(Long id, ServiceTicket serviceTicket, String note, LocalDateTime created_at) {
         this.id = id;
-        this.serviceTicket_id = serviceTicket_id;
+        this.serviceTicket = serviceTicket;
         this.note = note;
         this.created_at = created_at;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getServiceTicket_id() {
-        return serviceTicket_id;
+    public ServiceTicket getServiceTicket() {
+        return serviceTicket;
     }
 
-    public void setServiceTicket_id(int serviceTicket_id) {
-        this.serviceTicket_id = serviceTicket_id;
+    public void setServiceTicket(ServiceTicket serviceTicket) {
+        this.serviceTicket = serviceTicket;
     }
 
     public String getNote() {
@@ -42,11 +55,11 @@ public class ServiceTicketNote {
         this.note = note;
     }
 
-    public Timestamp getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
@@ -55,7 +68,7 @@ public class ServiceTicketNote {
     public String toString() {
         return "ServiceTicketNote{" +
                 "id=" + id +
-                ", serviceTicket_id=" + serviceTicket_id +
+                ", serviceTicket=" + serviceTicket +
                 ", note='" + note + '\'' +
                 ", created_at=" + created_at +
                 '}';

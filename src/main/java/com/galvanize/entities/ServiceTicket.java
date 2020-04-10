@@ -1,43 +1,66 @@
 package com.galvanize.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+@Entity (name = "ServiceTicket")
 
 public class ServiceTicket {
-    int id;
-    int customer_id;
-    String technician;
-    String status;
-    Timestamp request_date;
-    Timestamp appointment_date;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long  id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="customer_id", nullable = false)
+    private Customer customer;
+    private String problem;
+    private String technician;
+    private String status;
+    @JsonFormat(pattern = "MM/dd/yyyy HH:mm")
+    LocalDateTime request_date;
+    LocalDateTime appointment_date;
 
 
     public ServiceTicket(){};
 
 
-    public ServiceTicket(int id, int customer_id, String technician, String status, Timestamp request_date, Timestamp appointment_date) {
+    public ServiceTicket(Long id, Customer customer, String problem, String technician, String status,
+                         LocalDateTime request_date, LocalDateTime appointment_date) {
         this.id = id;
-        this.customer_id = customer_id;
+        this.customer = customer;
+        this.problem = problem;
         this.technician = technician;
         this.status = status;
         this.request_date = request_date;
         this.appointment_date = appointment_date;
     }
 
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem;
     }
 
     public String getTechnician() {
@@ -56,19 +79,19 @@ public class ServiceTicket {
         this.status = status;
     }
 
-    public Timestamp getRequest_date() {
+    public LocalDateTime getRequest_date() {
         return request_date;
     }
 
-    public void setRequest_date(Timestamp request_date) {
+    public void setRequest_date(LocalDateTime request_date) {
         this.request_date = request_date;
     }
 
-    public Timestamp getAppointment_date() {
+    public LocalDateTime getAppointment_date() {
         return appointment_date;
     }
 
-    public void setAppointment_date(Timestamp appointment_date) {
+    public void setAppointment_date(LocalDateTime appointment_date) {
         this.appointment_date = appointment_date;
     }
 
@@ -77,7 +100,8 @@ public class ServiceTicket {
     public String toString() {
         return "ServiceTicket{" +
                 "id=" + id +
-                ", customer_id=" + customer_id +
+                ", customer=" + customer +
+                ", problem='" + problem + '\'' +
                 ", technician='" + technician + '\'' +
                 ", status='" + status + '\'' +
                 ", request_date=" + request_date +
@@ -85,3 +109,4 @@ public class ServiceTicket {
                 '}';
     }
 }
+
